@@ -87,7 +87,7 @@ addLayer("p", {
 			cols: 4,
 			11: {
 				title: "开始",
-				description: "每秒获得 1 点数。",
+				description: "每秒获得 128 点数。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?2:1).pow(tmp.h.costExp11) },
 			},
 			12: {
@@ -218,8 +218,8 @@ addLayer("p", {
 				description: "差旋层电浆效果使用更好的公式 (log(log(x+1)+1)*10+1 -> 10^cbrt(log(x+1)))。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e11435":"e5070000").pow(tmp.h.costExp11) },
 				pseudoUnl() { return hasUpgrade("hn", 11) && (hasUpgrade("p", 14)||hasUpgrade("p", 23)) },
-				pseudoReq: "需要: 41,250 恶魂（无幽灵）",
-				pseudoCan() { return player.ps.souls.gte(41250) && player.ps.buyables[11].eq(0) },
+				pseudoReq: "需要: 250 恶魂（有幽灵）",
+				pseudoCan() { return player.ps.souls.gte(250) && player.ps.buyables[11].eq(0) },
 				unlocked() { return player.p.pseudoUpgs.includes(Number(this.id)) },
 				style: {"font-size": "9px" },
 			},
