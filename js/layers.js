@@ -28,12 +28,12 @@ ppppppppp
 
 addLayer("p", {
         name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "🅿", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "ρ", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         color: "#3162b2",
         requires: new Decimal(10), // Can be a function that takes requirement increases into account
-        resource: "毛血旺", // Name of prestige currency
-        baseResource: "字符", // Name of resource prestige is based on
+        resource: "声哇", // Name of prestige currency
+        baseResource: "type", // Name of resource prestige is based on
         baseAmount() {return player.points}, // Get the current amount of baseResource
         type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
         exponent() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?0.75:0.5 }, // Prestige currency exponent
@@ -88,25 +88,25 @@ addLayer("p", {
 			11: {
 				title: "开门见山",
 				description: "每秒获得 128 点数。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?256:0.2).pow(128) },
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?256:0.2).pow(tmp.h.costExp11*128) },
 			},
 			12: {
-				title: "这是削弱",
-				description: "下毛肚。",
+				title: "🍲增益",
+				description: "火锅好吃。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?10:1).pow(tmp.h.costExp11) },
 				effect() {
 					if (inChallenge("ne", 116)) return new Decimal(1);
 					
-					let eff = player.p.points.plus(1e4).pow(0.5);
-					if (hasUpgrade("g", 1)) eff = eff.pow(11000);
-					if (hasUpgrade("g", 2)) eff = eff.pow(10000);
-					if (hasUpgrade("g", 3) && player.i.buyables[12].gte(2)) eff = eff.pow(9000)
+					let eff = player.p.points.plus(6).pow(1500);
+					if (hasUpgrade("g", 14)) eff = eff.pow(9300);
+					if (hasUpgrade("g", 24)) eff = eff.pow(10000);
+					if (hasUpgrade("g", 34) && player.i.buyables[12].gte(2)) eff = eff.pow(1e5)
 					
 					if (hasChallenge("h", 22)) eff = softcap("p12_h22", eff);
 					else eff = softcap("p12", eff);
 					
-					if (hasUpgrade("p", 14)) eff = eff.pow(3);
-					if (hasUpgrade("hn", 14)) eff = eff.pow(1.05);
+					if (hasUpgrade("p", 14)) eff = eff.pow(1e7);
+					if (hasUpgrade("hn", 14)) eff = eff.pow(1e9);
 					if (hasUpgrade("b", 34) && player.i.buyables[12].gte(1)) eff = eff.pow(upgradeEffect("b", 34));
 					if ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false) eff = eff.pow(1.1);
 					
@@ -131,9 +131,9 @@ addLayer("p", {
 				},
 			},
 			13: {
-				title: "那很协调了",
-				description: "点数加成模组获取。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?50:5).pow(tmp.h.costExp11) },
+				title: "那很协同了",
+				description: "获取加成获取点数。",
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?50:5e-198).pow(tmp.h.costExp11) },
 				effect() { 
 					let eff = player.points.plus(1).log10().pow(0.75).plus(1);
 					if (hasUpgrade("p", 33)) eff = eff.pow(upgradeEffect("p", 33));
@@ -154,24 +154,24 @@ addLayer("p", {
 				},
 			},
 			14: {
-				title: "？",
-				description: "<b>这是削弱</b> 效果提升至114514次方（受软上限影响，其实没有效果）。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e589":"1e4070000").pow(tmp.h.costExp11) },
+				title: "萎了",
+				description: "<b></b> 被卡住了。",
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e589":"1e3").pow(tmp.h.costExp11) },
 				pseudoUnl() { return hasUpgrade("hn", 11) && hasUpgrade("p", 13) },
-				pseudoReq: '需要: 在 "夫人产孩子了！" 中达到 1e168,000 我要超级大空间'，,
-				pseudoCan() { return player.p.points.gte("1e168000")&&inChallenge("h", 42) },
+				pseudoReq: '需要: 在 "减产" 中达到 1 丸子',
+				pseudoCan() { return player.p.points.gte("1")&&inChallenge("h", 42) },
 				unlocked() { return player.p.pseudoUpgs.includes(Number(this.id)) },
 			},
 			21: {
-				title: "更多ccb",
-				description() { return "哇 "+(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e22222222":"1e25")+"%。" },
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e171:20).pow(tmp.h.costExp11) },
+				title: "飞起来",
+				description() { return "声望致力于让你飞到诡异不要来见他，所以给你加成了 "+(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e111111111":"1e114514")+"%。" },
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e171:2).pow(tmp.h.costExp11) },
 				unlocked() { return hasAchievement("a", 21)&&hasUpgrade("p", 11) },
 			},
 			22: {
-				title: "力了",
-				description: "炉管时间到了。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e308:0).pow(tmp.h.costExp11) },
+				title: "力量升级",
+				description: "点数获取基于你已购买的声望升级更快。",
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e262:75).pow(tmp.h.costExp11) },
 				effect() {
 					let eff = Decimal.pow(1.4, player.p.upgrades.length);
 					if (hasUpgrade("p", 32)) eff = eff.pow(2);
@@ -191,7 +191,7 @@ addLayer("p", {
 				},
 			},
 			23: {
-				title: "反转反转增益",
+				title: "反转声望增益",
 				description: "点数加成声望获取。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e305:5e3).pow(tmp.h.costExp11) },
 				effect() {
@@ -2808,7 +2808,7 @@ addLayer("sg", {
 				function() {return '你有 ' + format(player.sg.power) + ' 超级 GP，增幅生成器底数 '+format(tmp.sg.enEff)+'x'+(tmp.nerdMode?(" (sqrt(x+1))"):"")},
 					{}],
 			"blank",
-			["display-text", function() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes("sg"):false)?("你的超级生成器为你提供了 <h3 style='color: #84b88a; text-shadow: #78c48f 0px 0px 10px;'>"+formatWhole(tmp.sg.spectralTotal)+"</h3> 虚生成器"+(tmp.nerdMode?(" (((log(timeSinceRow4Reset+1)*(SG^2))^0.95)*1.2)"):"")+"，计算入操你妈效果，但不计入生成器不相关的升级效果。"):"" }],
+			["display-text", function() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes("sg"):false)?("你的超级生成器为你提供了 <h3 style='color: #84b88a; text-shadow: #78c48f 0px 0px 10px;'>"+formatWhole(tmp.sg.spectralTotal)+"</h3> 虚生成器"+(tmp.nerdMode?(" (((log(timeSinceRow4Reset+1)*(SG^2))^0.95)*1.2)"):"")+"，计算入生成器效果，但不计入生成器相关的升级效果。"):"" }],
 		],
 		startData() { return {
 			unlocked: false,
@@ -2861,8 +2861,8 @@ addLayer("h", {
         }},
         color: "#a14040",
         requires: new Decimal(1e30), // Can be a function that takes requirement increases into account
-        resource: "出金啦", // Name of prestige currency
-        baseResource: "SSS", // Name of resource prestige is based on
+        resource: "障碍灵魂", // Name of prestige currency
+        baseResource: "TE", // Name of resource prestige is based on
         baseAmount() {return player.t.energy}, // Get the current amount of baseResource
         type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
         exponent() { return new Decimal(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?.2:.125) }, // Prestige currency exponent
@@ -2909,7 +2909,7 @@ addLayer("h", {
 			return eff;
 		},
 		effectDescription() {
-			return "哇，出金啦 "+format(tmp.h.effect)+" ("+(tmp.nerdMode?(tmp.h.effect.gte(15e4)?("(10^sqrt(log(hindranceSpirit/1e3*(log(points+1)+1)+1)^("+((hasChallenge("h", 11)?3.6:3)*(hasUpgrade("ba", 21)?8:1))+")"):("(hindranceSpirit/1e3*(log(points+1)+1)+1)^("+((hasChallenge("h", 11)?3.6:3)*(hasUpgrade("ba", 21)?8:1))+")")):"基于点数")+")"
+			return "增幅点数获取、TE 获取与 TE 上限 "+format(tmp.h.effect)+" ("+(tmp.nerdMode?(tmp.h.effect.gte(15e4)?("(10^sqrt(log(hindranceSpirit/1e3*(log(points+1)+1))/log(1.5e5))+1)^("+((hasChallenge("h", 11)?3.6:3)*(hasUpgrade("ba", 21)?8:1))+")"):("(hindranceSpirit/1e3*(log(points+1)+1)+1)^("+((hasChallenge("h", 11)?3.6:3)*(hasUpgrade("ba", 21)?8:1))+")")):"基于点数")+")"
 		},
 		costMult11() {
 			let mult = new Decimal(1);
@@ -2942,24 +2942,24 @@ addLayer("h", {
 		milestones: {
 			0: {
 				unlocked() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes("h"):false) },
-				requirementDescription: "e3 障碍灵魂",
-				done() { return player.h.points.gte("1e3") },
-				effectDescription: "解锁自动可重复查棍子。",
-				toggles: [["h", "otto"]],
+				requirementDescription: "e300,000,000 障碍灵魂",
+				done() { return player.h.points.gte("e3e8") },
+				effectDescription: "解锁自动可重复障碍。",
+				toggles: [["h", "auto"]],
 			},
 		},
 		challenges: {
 			rows: 4,
 			cols: 2,
 			11: {
-				name: "只有荒漠",
+				name: "升级荒漠",
 				completionLimit: 1,
-				challengeDescription: "BP你们两个刚肘击完我的木琴，还要肘击我的星云和超级大空间，你们两个太坏了😱😱😱",
+				challengeDescription: "声望/增幅器升级会无视里程碑进行重置，同时每个声望/增幅器升级夸张地增加其他升级的价格。",
 				unlocked() { return player.h.unlocked },
 				goal() { return new Decimal(player.ma.current=="h"?"e1.37e8":"1e1325") },
-				currencyDisplayName: "小朋友们发送的666",
+				currencyDisplayName: "点数",
 				currencyInternalName: "points",
-				rewardDescription: "解锁桂头升级，同时障碍灵魂的效果提升至 0 次幂。",
+				rewardDescription: "解锁诡异升级，同时障碍灵魂的效果提升至 1.2 次幂。",
 				onStart(testInput=false) { 
 					if (testInput && !(hasAchievement("a", 81)&&player.ma.current!="h")) {
 						player.p.upgrades = []; 
@@ -2968,7 +2968,7 @@ addLayer("h", {
 				},
 			},
 			12: {
-				name: "速度之man",
+				name: "速度之魔",
 				completionLimit: 1,
 				challengeDescription: "增幅器/生成器底数被时间消减（你的超级增幅器会放大此效果）。",
 				unlocked() { return hasChallenge("h", 11) },
