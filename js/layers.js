@@ -86,9 +86,9 @@ addLayer("p", {
 			rows: 4,
 			cols: 4,
 			11: {
-				title: "开始",
+				title: "开门见山",
 				description: "每秒获得 128 点数。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?2:1).pow(tmp.h.costExp11) },
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?2:256).pow(tmp.h.costExp11) },
 			},
 			12: {
 				title: "声望增益",
