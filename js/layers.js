@@ -91,7 +91,7 @@ addLayer("p", {
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?256:0.2).pow(128) },
 			},
 			12: {
-				title: "声望增益plus",
+				title: "这是削弱",
 				description: "下毛肚。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?10:1).pow(tmp.h.costExp11) },
 				effect() {
@@ -131,8 +131,8 @@ addLayer("p", {
 				},
 			},
 			13: {
-				title: "自协同",
-				description: "点数加成点数获取。",
+				title: "那很协调了",
+				description: "点数加成模组获取。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?50:5).pow(tmp.h.costExp11) },
 				effect() { 
 					let eff = player.points.plus(1).log10().pow(0.75).plus(1);
@@ -154,24 +154,24 @@ addLayer("p", {
 				},
 			},
 			14: {
-				title: "声望强度",
-				description: "<b>声望增益</b> 效果提升至立方（不受软上限影响）。",
+				title: "？",
+				description: "<b>这是削弱</b> 效果提升至114514次方（受软上限影响，其实没有效果）。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e589":"1e4070000").pow(tmp.h.costExp11) },
 				pseudoUnl() { return hasUpgrade("hn", 11) && hasUpgrade("p", 13) },
-				pseudoReq: '需要: 在 "减产" 中达到 1e168,000 声望',
+				pseudoReq: '需要: 在 "夫人产孩子了！" 中达到 1e168,000 我要超级大空间'，,
 				pseudoCan() { return player.p.points.gte("1e168000")&&inChallenge("h", 42) },
 				unlocked() { return player.p.pseudoUpgs.includes(Number(this.id)) },
 			},
 			21: {
-				title: "更多声望",
-				description() { return "声望获取增加了 "+(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e52":"80")+"%。" },
+				title: "更多ccb",
+				description() { return "哇 "+(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e22222222":"1e25")+"%。" },
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e171:20).pow(tmp.h.costExp11) },
 				unlocked() { return hasAchievement("a", 21)&&hasUpgrade("p", 11) },
 			},
 			22: {
-				title: "力量升级",
-				description: "点数获取基于你已购买的声望升级更快。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e262:75).pow(tmp.h.costExp11) },
+				title: "力了",
+				description: "炉管时间到了。",
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e308:0).pow(tmp.h.costExp11) },
 				effect() {
 					let eff = Decimal.pow(1.4, player.p.upgrades.length);
 					if (hasUpgrade("p", 32)) eff = eff.pow(2);
@@ -191,7 +191,7 @@ addLayer("p", {
 				},
 			},
 			23: {
-				title: "反转声望增益",
+				title: "反转反转增益",
 				description: "点数加成声望获取。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e305:5e3).pow(tmp.h.costExp11) },
 				effect() {
