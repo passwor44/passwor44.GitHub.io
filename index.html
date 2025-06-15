@@ -1,1 +1,58 @@
-y
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8" />
+	<link id="styleStuff" rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="notification.css" />
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+	<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.12/vue.min.js"></script>
+	<script type="text/javascript" src="js/technical/break_eternity.js"></script>
+	<script type="text/javascript" src="js/technical/layerSupport.js"></script>
+	<script type="text/javascript" src="js/tree.js"></script>
+	<script type="text/javascript" src="js/sc.js"></script>
+	<script type="text/javascript" src="js/help.js"></script>
+	<script type="text/javascript" src="js/layers.js"></script>
+	<script type="text/javascript" src="js/mod.js"></script>
+	<script type="text/javascript" src="js/technical/temp.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+	<script type="text/javascript" src="js/utils.js"></script>
+	<script type="text/javascript" src="js/technical/systemComponents.js"></script>
+	<script type="text/javascript" src="js/components.js"></script>
+	<script type="text/javascript" src="js/technical/canvas.js"></script>
+</head>
+<body onload="load()">
+	<script src="chs.js?202106041511"></script>
+	<script src="//g8hh.com/zh/core.js"></script> 
+	<div id="app">
+		<canvas id="treeCanvas" class="canvas" v-if ="!(gameEnded && !player.keepGoing)"></canvas>
+
+		<div v-if="false" id="loadingSection" class="fullWidth">
+			<h1>加载中...<br></h1><br>如果用时过长，请联系作者的 <a style="font-size: 30px" href="https://discord.gg/ww5NQutTRK">discord</a>。
+		</div>
+		<div v-bind:style="{display: 'block'}" style="display: none;">
+			<div class="vl" v-if="player.navTab!= 'none' &&player.tab!='none'&&!(gameEnded && !player.keepGoing)"></div>
+			<div v-if="(gameEnded && !player.keepGoing)" class="fullWidth">
+				<br>
+				<h2>{{modInfo.name}} {{VERSION.withoutName}}</h2><br><br>
+				<h3>恭喜! 你达到了目前的通关条件。</h3><br>
+				<h3>在作者的 discord 上可以检查是否有新的内容更新。</h3><br><br>
+				<div v-if="!player.timePlayedReset">通关用时 {{formatTime(player.timePlayed)}}。</div>
+				<div v-if="player.timePlayedReset">若这是速通记录，请在流上推送此记录。</div>
+				<br>
+				<button class="longUpg can" onclick="hardReset(true)">重玩</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="longUpg can" onclick="keepGoing()">继续游戏</button>
+				<br><br><br>
+				<a class="link" href="http://discord.gg/wwQfgPa" target="_blank" v-bind:style="{'font-size': '16px'}">The Prestige Tree Discord</a><br>
+				<a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Modding Tree Discord</a><br>
+				<br><br>
+				如果你想要速通这个游戏的话，点击「重玩」按钮并记录你的游戏过程，将视频发布在 Discord 的 #speedrun-submissions 频道上。
+				<br><br><br>
+			</div>
+
+			<!-- Notifications -->
+			<div class="notification-container">
+				<transition-group name="fade">
+					<div v-for="notification,index in activeNotifications" class="notification" v-bind:class="notification.type" v-bind:key="notification.id">
+						<h3>{{notification.title}}</h3><br>
+						<h2 v-html="notification.message"></h2>
+					</div>
+				</transition-group>
+			</div>
