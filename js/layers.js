@@ -1,4 +1,3 @@
-
 /*
                     
                     
@@ -335,7 +334,7 @@ b::::::b
 */
 addLayer("b", {
         name: "booster", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "Bgv", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "Bst", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         color: "#808995",
         requires() { return new Decimal(200).times((player.b.unlockOrder&&!player.b.unlocked)?5000:1) }, // Can be a function that takes requirement increases into account
@@ -634,7 +633,7 @@ addLayer("g", {
         name: "generator", // This is optional, only used in a few places, If absent it just uses the layer id.
         symbol: "G", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-        color: "#a3d9a5",
+        color: "#4bff9a",
         requires() { return new Decimal(200).times((player.g.unlockOrder&&!player.g.unlocked)?5000:1) }, // Can be a function that takes requirement increases into account
         resource: "生成器", // Name of prestige currency
         baseResource: "点数", // Name of resource prestige is based on
@@ -748,17 +747,17 @@ addLayer("g", {
 		milestones: {
 			0: {
 				requirementDescription: "8 生成器",
-				done() { return player.g.best.gte(8) || hasAchievement("a", 41) || hasAchievement("a", 71) },
+				done() { return player.g.best.gte(1) || hasAchievement("a", 41) || hasAchievement("a", 71) },
 				effectDescription: "重置时保留声望升级。",
 			},
 			1: {
 				requirementDescription: "10 生成器",
-				done() { return player.g.best.gte(10) || hasAchievement("a", 71) },
+				done() { return player.g.best.gte(3) || hasAchievement("a", 71) },
 				effectDescription: "每秒获得重置时能获得的 100% 的声望。",
 			},
 			2: {
 				requirementDescription: "15 生成器",
-				done() { return player.g.best.gte(15) || hasAchievement("a", 71) },
+				done() { return player.g.best.gte(4) || hasAchievement("a", 71) },
 				effectDescription: "允许最大购买生成器。",
 			},
 		},
@@ -1015,9 +1014,9 @@ addLayer("t", {
 			pseudoUpgs: [],
 			autoExt: false,
         }},
-        color: "#006609",
+        color: "#002219",
         requires() { return new Decimal(1e120).times(Decimal.pow("1e180", Decimal.pow(player[this.layer].unlockOrder, 1.415038))) }, // Can be a function that takes requirement increases into account
-        resource: "时间胶囊", // Name of prestige currency
+        resource: "时间速效胶囊", // Name of prestige currency
         baseResource: "点数", // Name of resource prestige is based on
         baseAmount() {return player.points}, // Get the current amount of baseResource
         type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -1124,7 +1123,7 @@ addLayer("t", {
 			"prestige-button",
 			"blank",
 			["display-text",
-				function() {return '你有 ' + format(player.t.energy) + ' TE，增幅点数和声望获取 '+format(tmp.t.enEff)+'x'+(tmp.nerdMode?" ((x+1)^"+format(1.2*(hasUpgrade("t", 14)?1.3:1)*(hasUpgrade("q", 24)?7.5:1))+")":"")+(hasUpgrade("t", 24)?("，并提供 "+formatWhole(tmp.t.enEff2)+" 个免费的扩展时间胶囊 ("+(tmp.nerdMode?"log(x+1)^0.556":("下一个在 "+format(tmp.t.nextEnEff2)))+")."):"")},
+				function() {return '你有 ' + format(player.t.energy) + ' TE，增幅点数和声望获取 '+format(tmp.t.enEff)+'x'+(tmp.nerdMode?" ((x+1)^"+format(1.2*(hasUpgrade("t", 14)?1.3:1)*(hasUpgrade("q", 24)?7.5:1))+")":"")+(hasUpgrade("t", 24)?("，并提供 "+formatWhole(tmp.t.enEff2)+" 个免费的扩展时间胶囊 ("+(tmp.nerdMode?"log(x+1)^3":("下一个在 "+format(tmp.t.nextEnEff2)))+")."):"")},
 					{}],
 			"blank",
 			["display-text",
@@ -1331,7 +1330,7 @@ addLayer("t", {
 			rows: 1,
 			cols: 1,
 			11: {
-				title: "扩展时空胶囊",
+				title: "服用胶囊",
 				costScalingEnabled() {
 					return !(hasUpgrade("t", 31) && player.i.buyables[12].gte(4))
 				},
@@ -1350,7 +1349,7 @@ addLayer("t", {
                     let data = tmp[this.layer].buyables[this.id]
 					let e = tmp.t.freeExtraTimeCapsules;
                     let display = (tmp.nerdMode?("价格公式: "+((player[this.layer].buyables[this.id].gte(25)&&data.costScalingEnabled)?"(((x^2)/25":"((x")+"*0.4)^"+format(data.costExp)+"+1)*10"):("价格: " + formatWhole(data.cost) + " 增幅器"))+"\n\
-                    数量: " + formatWhole(player[this.layer].buyables[this.id])+(e.gt(0)?(" + "+formatWhole(e)):"")+(inChallenge("h", 31)?("\n剩余购买量: "+String(10-player.h.chall31bought)):"")
+                    数量: " + formatWhole(player[this.layer].buyables[this.id])+(e.gt(0)?(" + "+formatWhole(e)):"")+(inChallenge("h", 31)?("\n剩余购买量的大脆倍数: "+String(10-player.h.chall31bought)):"")
 					return display;
                 },
                 unlocked() { return player[this.layer].unlocked }, 
@@ -1399,8 +1398,8 @@ addLayer("t", {
 				toggles: [["b", "auto"]],
 			},
 			4: {
-				requirementDescription: "8 时间胶囊",
-				done() { return player.t.best.gte(8) || hasAchievement("a", 71) },
+				requirementDescription: "6 时间胶囊",
+				done() { return player.t.best.gte(6) || hasAchievement("a", 71) },
 				effectDescription: "增幅器不再重置任何东西。",
 			},
 		},
@@ -1445,7 +1444,7 @@ addLayer("e", {
 			auto: false,
 			pseudoUpgs: [],
         }},
-        color: "#b82fbd",
+        color: "#d25fa1",
         requires() { return new Decimal(1e120).times(Decimal.pow("1e180", Decimal.pow(player[this.layer].unlockOrder, 1.415038))) }, // Can be a function that takes requirement increases into account
         resource: "增强", // Name of prestige currency
         baseResource: "点数	", // Name of resource prestige is based on
@@ -6210,9 +6209,9 @@ addLayer("n", {
 			activeSecondaries: {purpleBlue: false, blueOrange: false, orangePurple: false},
 			first: 0,
         }},
-        color: "#430082",
+        color: "#d28e8e",
 		nodeStyle() { return {
-			"background-color": (((player.n.unlocked||canReset("n"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#430082":"#bf8f8f"),
+			"background-color": (((player.n.unlocked||canReset("n"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#d28e8e":"#c5d28e"),
 			color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
 		}},
 		componentStyles() { return {
