@@ -1002,7 +1002,7 @@ tttttt:::::::tttttt
 */
 addLayer("t", {
         name: "time", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "N", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "NaN", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         startData() { return {
             unlocked: false,
@@ -1015,15 +1015,6 @@ addLayer("t", {
 			autoExt: false,
         }},
         color: "#92ffd5",
-        nodeStyle() { return {
-			"background-color": (((player.n.unlocked||canReset("n"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#92ffd5":"#93ff94"),
-			color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
-		}},
-		componentStyles() { return {
-			"prestige-button": {
-				color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
-			},
-		}},
         requires() { return new Decimal(1e120).times(Decimal.pow("1e180", Decimal.pow(player[this.layer].unlockOrder, 1.415038))) }, // Can be a function that takes requirement increases into account
         resource: "时间速效胶囊", // Name of prestige currency
         baseResource: "DECOMBER", // Name of resource prestige is based on
