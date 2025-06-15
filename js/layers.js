@@ -1016,7 +1016,7 @@ addLayer("t", {
         }},
         color: "#92ffd5",
         nodeStyle() { return {
-                        "background-color": (((player.n.unlocked||canReset("t"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#d28e8e":"#c5d28e"),
+                        "background-color": (((player.n.unlocked||canReset("t"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#92FF5":"#93ff62"),
                         color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
                 }},
                 componentStyles() { return {
