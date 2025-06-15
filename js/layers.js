@@ -1015,6 +1015,15 @@ addLayer("t", {
 			autoExt: false,
         }},
         color: "#92ffd5",
+        nodeStyle() { return {
+                        "background-color": (((player.n.unlocked||canReset("t"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#d28e8e":"#c5d28e"),
+                        color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
+                }},
+                componentStyles() { return {
+                        "prestige-button": {
+                                color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
+                        },
+                }},
         requires() { return new Decimal(1e120).times(Decimal.pow("1e180", Decimal.pow(player[this.layer].unlockOrder, 1.415038))) }, // Can be a function that takes requirement increases into account
         resource: "时间速效胶囊", // Name of prestige currency
         baseResource: "DECOMBER", // Name of resource prestige is based on
