@@ -1,3 +1,4 @@
+
 /*
                     
                     
@@ -66,11 +67,11 @@ addLayer("p", {
 		passiveGeneration() { return (hasMilestone("g", 1)&&player.ma.current!="p")?1:0 },
 		doReset(resettingLayer) {
 			let keep = [];
-			if (hasMilestone("b", 142) && resettingLayer=="b") keep.push("upgrades")
-			if (hasMilestone("g", 193) && resettingLayer=="g") keep.push("upgrades")
-			if (hasMilestone("e", 1444) && resettingLayer=="e") keep.push("upgrades")
-			if (hasMilestone("t", 1566) && resettingLayer=="t") keep.push("upgrades")
-			if (hasMilestone("s", 1544) && resettingLayer=="s") keep.push("upgrades")
+			if (hasMilestone("b", 1) && resettingLayer=="b") keep.push("upgrades")
+			if (hasMilestone("g", 1) && resettingLayer=="g") keep.push("upgrades")
+			if (hasMilestone("e", 14) && resettingLayer=="e") keep.push("upgrades")
+			if (hasMilestone("t", 15) && resettingLayer=="t") keep.push("upgrades")
+			if (hasMilestone("s", 15) && resettingLayer=="s") keep.push("upgrades")
 			if (hasAchievement("a", 41)) keep.push("upgrades")
 			if (layers[resettingLayer].row > this.row) layerDataReset("p", keep)
 		},
@@ -88,19 +89,19 @@ addLayer("p", {
 			11: {
 				title: "开门见山",
 				description: "每秒获得 128 点数。",
-				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?2:0.2).pow(tmp.h.costExp11) },
+				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?256:0.2).pow(tmp.h.costExp11) },
 			},
 			12: {
-				title: "声望增益",
+				title: "声望增益plus",
 				description: "声望加成点数获取。",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?10:1).pow(tmp.h.costExp11) },
 				effect() {
-					if (inChallenge("ne", 11)) return new Decimal(1);
+					if (inChallenge("ne", 116)) return new Decimal(1);
 					
-					let eff = player.p.points.plus(2).pow(0.5);
-					if (hasUpgrade("g", 14)) eff = eff.pow(1.5);
-					if (hasUpgrade("g", 24)) eff = eff.pow(1.4666667);
-					if (hasUpgrade("g", 34) && player.i.buyables[12].gte(2)) eff = eff.pow(1.4333333)
+					let eff = player.p.points.plus(0.99).pow(0.5);
+					if (hasUpgrade("g", 14)) eff = eff.pow(0.85);
+					if (hasUpgrade("g", 24)) eff = eff.pow(0.80);
+					if (hasUpgrade("g", 34) && player.i.buyables[12].gte(2)) eff = eff.pow(0.93)
 					
 					if (hasChallenge("h", 22)) eff = softcap("p12_h22", eff);
 					else eff = softcap("p12", eff);
@@ -334,9 +335,9 @@ b::::::b
 */
 addLayer("b", {
         name: "booster", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "B", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "Bgv", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-        color: "#6e64c4",
+        color: "#808995",
         requires() { return new Decimal(200).times((player.b.unlockOrder&&!player.b.unlocked)?5000:1) }, // Can be a function that takes requirement increases into account
         resource: "增幅器", // Name of prestige currency
         baseResource: "点数", // Name of resource prestige is based on
@@ -426,13 +427,13 @@ addLayer("b", {
 		increaseUnlockOrder: ["g"],
 		milestones: {
 			0: {
-				requirementDescription: "8 增幅器",
-				done() { return player.b.best.gte(8) || hasAchievement("a", 41) || hasAchievement("a", 71) },
+				requirementDescription: "1 增幅器",
+				done() { return player.b.best.gte(1) || hasAchievement("a", 41) || hasAchievement("a", 71) },
 				effectDescription: "重置时保留声望升级。",
 			},
 			1: {
-				requirementDescription: "15 增幅器",
-				done() { return player.b.best.gte(15) || hasAchievement("a", 71) },
+				requirementDescription: "2 增幅器",
+				done() { return player.b.best.gte(2) || hasAchievement("a", 71) },
 				effectDescription: "允许最大购买增幅器。",
 			},
 		},
@@ -440,7 +441,7 @@ addLayer("b", {
 			rows: 3,
 			cols: 4,
 			11: {
-				title: "BP 连击",
+				title: "666还有联合",
 				description: "最多增幅器加成声望获取。",
 				cost() { return tmp.h.costMult11b.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1438:3) },
 				effect() { 
@@ -454,8 +455,8 @@ addLayer("b", {
 				unlocked() { return player.b.unlocked },
 				effectDisplay() { return format(tmp.b.upgrades[11].effect)+"x" },
 				formula() { 
-					let base = "sqrt(x)+1"
-					if (hasUpgrade("b", 32)) base = "(sqrt(x)+1)*(1.125^x)"
+					let base = "sqrt(x)+25"
+					if (hasUpgrade("b", 32)) base = "(sqrt(x)+25)*(2^x)"
 					let exp = new Decimal(1)
 					if (hasUpgrade("s", 15)) exp = exp.times(buyableEffect("s", 14).root(2.7));
 					if (hasUpgrade("b", 14) && player.i.buyables[12].gte(1)) exp = exp.times(upgradeEffect("b", 14));
@@ -478,7 +479,7 @@ addLayer("b", {
 				formula() { 
 					let exp = new Decimal(1);
 					if (hasUpgrade("b", 14) && player.i.buyables[12].gte(1)) exp = exp.times(upgradeEffect("b", 14));
-					let f = "sqrt(log(x+1))"+(hasUpgrade("e", 14)?("*"+format(upgradeEffect("e", 14).div(3))):"/3") 
+					let f = "log(x+1)"+(hasUpgrade("e", 14)?("*"+format(upgradeEffect("e", 14).div(3))):"/3") 
 					if (exp.gt(1)) f = "("+f+")^"+format(exp);
 					return f;
 				},
