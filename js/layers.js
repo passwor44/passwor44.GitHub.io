@@ -1002,7 +1002,7 @@ tttttt:::::::tttttt
 */
 addLayer("t", {
         name: "time", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "T", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "N", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         startData() { return {
             unlocked: false,
@@ -1015,11 +1015,20 @@ addLayer("t", {
 			autoExt: false,
         }},
         color: "#002219",
+        nodeStyle() { return {
+			"background-color": (((player.n.unlocked||canReset("n"))&&!(Array.isArray(tmp.ma.canBeMastered)&&player.ma.selectionActive&&tmp[this.layer].row<tmp.ma.rowLimit&&!tmp.ma.canBeMastered.includes(this.layer)))?"#92ffd5":"#93ff94"),
+			color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
+		}},
+		componentStyles() { return {
+			"prestige-button": {
+				color: (player.oldStyle?"white":"rgba(255, 255, 255, 0.75)"),
+			},
+		}},
         requires() { return new Decimal(1e120).times(Decimal.pow("1e180", Decimal.pow(player[this.layer].unlockOrder, 1.415038))) }, // Can be a function that takes requirement increases into account
         resource: "时间速效胶囊", // Name of prestige currency
-        baseResource: "点数", // Name of resource prestige is based on
+        baseResource: "DECOMBER", // Name of resource prestige is based on
         baseAmount() {return player.points}, // Get the current amount of baseResource
-        type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+        type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
         exponent() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?new Decimal(1.4):new Decimal(1.85) }, // Prestige currency exponent
 		base() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?new Decimal(10):new Decimal(1e15) },
         gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -2808,7 +2817,7 @@ addLayer("sg", {
 				function() {return '你有 ' + format(player.sg.power) + ' 超级 GP，增幅生成器底数 '+format(tmp.sg.enEff)+'x'+(tmp.nerdMode?(" (sqrt(x+1))"):"")},
 					{}],
 			"blank",
-			["display-text", function() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes("sg"):false)?("你的超级生成器为你提供了 <h3 style='color: #84b88a; text-shadow: #78c48f 0px 0px 10px;'>"+formatWhole(tmp.sg.spectralTotal)+"</h3> 虚生成器"+(tmp.nerdMode?(" (((log(timeSinceRow4Reset+1)*(SG^2))^0.95)*1.2)"):"")+"，计算入生成器效果，但不计入生成器相关的升级效果。"):"" }],
+			["display-text", function() { return ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes("sg"):false)?("你的超级生成器为你提供了 <h3 style='color: #84b88a; text-shadow: #78c48f 0px 0px 10px;'>"+formatWhole(tmp.sg.spectralTotal)+"</h3> 虚生成器"+(tmp.nerdMode?(" (((log(timeSinceRow4Reset+1)*(SG^2))^0.95)*1.2)"):"")+"，计算入炉管效果，但不计入生成器相关的升级效果。"):"" }],
 		],
 		startData() { return {
 			unlocked: false,
@@ -3812,7 +3821,7 @@ o:::::::::::::::o
 */
 addLayer("o", {
 	name: "solarity", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "O", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "huh", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         startData() { return {
             unlocked: false,
@@ -4211,7 +4220,7 @@ s::::::::::::::s s::::::::::::::s
 */
 addLayer("ss", {
         name: "subspace", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "SS", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "S+", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 3, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         startData() { return {
             unlocked: false,
@@ -4412,7 +4421,7 @@ addLayer("ss", {
 				unlocked() { return hasUpgrade("ss", 33) },
 			},
 			42: {
-				title: "子子空间",
+				title: "hyper子空间",
 				description: "建筑增强 100%（叠加）。",
 				cost() { return new Decimal((player.ma.current=="ss")?"1e17799":"1e936") },
 				currencyDisplayName: "子空间",
@@ -6196,7 +6205,7 @@ nn:::::::::::::::n
 */
 addLayer("n", {
 		name: "nebula", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "N", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "T", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         startData() { return {
             unlocked: false,
