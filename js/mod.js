@@ -14,8 +14,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.3",
-	patch: 1,
+	num: "types",
+	patch: 1.79e308,
 	name: "扩展更新",
 }
 
