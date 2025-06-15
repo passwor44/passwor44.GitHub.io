@@ -11,18 +11,7 @@ function exponentialFormat(num, precision) {
 	return new Decimal(m).toStringWithDecimalPlaces(precision)+"e"+e
 }
 
-function commaFormat(num, precision) {
-	if (num === null || num === undefined) return "NaN"
-	if (num.mag < 0.001) return (0).toFixed(precision)
-	return num.toStringWithDecimalPlaces(precision).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-}
-
-
-function regularFormat(num, precision) {
-	if (num === null || num === undefined) return "NaN"
-	if (num.mag < 0.001) return (0).toFixed(precision)
-	return num.toStringWithDecimalPlaces(precision)
-}
+function commaFormat(num, precision) 
 
 function fixValue(x, y = 0) {
 	return x || new Decimal(y)
