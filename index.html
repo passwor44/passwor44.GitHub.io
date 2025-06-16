@@ -27,9 +27,6 @@
 	<div id="app">
 		<canvas id="treeCanvas" class="canvas" v-if ="!(gameEnded && !player.keepGoing)"></canvas>
 
-		<div v-if="false" id="loadingSection" class="fullWidth">
-			<h1>加载中...<br></h1><br>如果用时过长，请联系作者的 <a style="font-size: 30px" href="https://discord.gg/ww5NQutTRK">discord</a>。
-		</div>
 		<div v-bind:style="{display: 'block'}" style="display: none;">
 			<div class="vl" v-if="player.navTab!= 'none' &&player.tab!='none'&&!(gameEnded && !player.keepGoing)"></div>
 			<div v-if="(gameEnded && !player.keepGoing)" class="fullWidth">
